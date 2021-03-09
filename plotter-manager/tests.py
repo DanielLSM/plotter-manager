@@ -69,3 +69,23 @@ def test_plot_from_file_xy_label(mock_plt):
 
     # Assert plt.figure got called
     assert mock_plt.figure.called
+
+
+##########################################################
+# Testing plot_from_file to check if fill between is called with
+# proper alpha
+
+
+@mock.patch("%s.my_plot.plt" % __name__)
+def test_plot_from_file_fill_between(mock_plt):
+    my_plot.plt.figure()
+    my_plot.plot_from_file(file_name="00_25",
+                           param_name="return",
+                           limit_x_range='steps_return')
+    my_plot.show()
+
+    # Assert plt.fillbetween has been called
+    mock_plt.fill_between.assert_called_once()
+
+    # Assert plt.figure got called
+    assert mock_plt.figure.called
