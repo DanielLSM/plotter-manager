@@ -21,7 +21,7 @@ $ cd plotter-manager
 ```
 4. Create a new conda environment from the provided file
 ```
-$ conda env create -f wasp-soft
+$ conda env create -f wasp-soft.yml
 ```
 5. Activate said conda environment
 ```
