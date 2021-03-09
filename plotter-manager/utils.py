@@ -11,3 +11,9 @@ def save_pickle(obj, name):
 def load_pickle(name):
     with open("data/" + name + ".pkl", 'rb') as handle:
         return pkl.load(handle)
+
+
+def return_date():
+    now = datetime.now()
+    dt_string = now.strftime("%d-%m-%Y %H:%M:%S")
+    return dt_string
