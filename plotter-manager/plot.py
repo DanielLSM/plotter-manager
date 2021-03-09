@@ -15,18 +15,22 @@ def get_axis_fig():
 
 def plot(axis, x, y):
     assert len(x) == len(y)
-    plot(x, y)
+    axis.plot(x, y)
 
 
 def set_labels(axis, x_label, y_label, title):
-    ax.set(xlabel=x_label, ylabel=y_label, title=title)
+    axis.set(xlabel=x_label, ylabel=y_label, title=title)
+
+
+def set_grid(axis):
+    axis.grid()
 
 
 def save_figure(fig, fig_name):
     fig.savefig(OUTPUT_DIR + fig_name)
 
 
-def load_IEE_settings():
+def load_IEEE_settings():
     matplotlib.rcParams['svg.fonttype'] = 'none'
     matplotlib.rcParams['font.family'] = 'sans-serif'
     matplotlib.rcParams['font.sans-serif'] = 'Latin Modern Math'
