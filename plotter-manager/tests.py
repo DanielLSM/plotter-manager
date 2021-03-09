@@ -111,3 +111,27 @@ def test_plot_from_file_ranges(mock_plt):
 
     # Assert plt.figure got called
     assert mock_plt.figure.called
+
+
+##########################################################
+# Testing plot_from_file to check if calls with yticks are correct
+
+
+@mock.patch("%s.my_plot.plt" % __name__)
+def test_plot_from_file_yticks(mock_plt):
+    my_plot.plt.figure()
+    range_y = [-1, 1]
+    y_ticks = 0.01
+    my_plot.plot_from_file(file_name="00_25",
+                           param_name="return",
+                           limit_x_range='steps_return',
+                           limit_x=1000,
+                           range_y=range_y,
+                           y_ticks=y_ticks)
+    my_plot.show()
+
+    # Assert plt.yticks has been called with expected title arg
+    mock_plt.yticks.assert_called_once()
+
+    # Assert plt.figure got called
+    assert mock_plt.figure.called
