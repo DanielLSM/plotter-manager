@@ -160,3 +160,28 @@ def test_2_plot_files_legend(mock_plt):
 
     # Assert plt.figure got called
     assert mock_plt.figure.called
+
+
+##########################################################
+# multiple plot 4 files to check if the legend is correctly called
+
+
+@mock.patch("%s.my_plot.plt" % __name__)
+def test_4_plot_files_legend(mock_plt):
+    my_plot.plt.figure()
+    my_plot.plot_files(['00_25', '25_50', '50_75', '75_100'],
+                       param_name='return',
+                       last_N=100,
+                       limit_x=None,
+                       limit_x_range='steps_return',
+                       range_y=None,
+                       y_ticks=None,
+                       legend=True)
+
+    my_plot.show()
+
+    # Assert plt.legend has been called with expected title arg
+    mock_plt.legend.assert_called_once()
+
+    # Assert plt.figure got called
+    assert mock_plt.figure.called
