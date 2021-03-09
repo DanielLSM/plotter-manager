@@ -49,3 +49,23 @@ def test_plot_data_title(mock_plt):
 
     # Assert plt.figure got called
     assert mock_plt.figure.called
+
+
+##########################################################
+# Testing plot_from_file to check if the labels are plotted correctly
+
+
+@mock.patch("%s.my_plot.plt" % __name__)
+def test_plot_from_file_xy_label(mock_plt):
+    my_plot.plt.figure()
+    my_plot.plot_from_file(file_name="00_25",
+                           param_name="return",
+                           limit_x_range='steps_return')
+    my_plot.show()
+
+    # Assert plt.xlabel and y has been called with expected title arg
+    mock_plt.xlabel.assert_called_once_with("steps_return")
+    mock_plt.ylabel.assert_called_once_with("return")
+
+    # Assert plt.figure got called
+    assert mock_plt.figure.called
