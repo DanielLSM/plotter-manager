@@ -10,14 +10,20 @@ DATA_DIR = "data/"
 OUTPUT_DIR = "figs/"
 
 
+def plot_data(x, y, title):
+    plt.figure()
+    plt.title(title)
+    plt.plot(x, y)
+    plt.show()
+
+
 def get_axis_fig():
     fig, ax = plt.subplots()
     return fig, ax
 
 
 def plot(axis, x, y):
-    assert len(x) == len(y)
-    axis.plot(x, y)
+    return axis.plot(x, y)
 
 
 def set_labels(axis, x_label, y_label, title):
@@ -82,3 +88,45 @@ def plot_from_file(file_name,
     else:
         plt.xlabel("episodes")
     plt.ylabel(param_name)
+
+
+def plot_files(*file_names,
+               param_name,
+               limit_x=None,
+               limit_x_range=None,
+               range_y=None,
+               y_ticks=None,
+               last_N=100,
+               legend=False):
+
+    colors = ['blue', 'green', 'red', 'yellow']
+    # import ipdb
+    # ipdb.set_trace()
+    for _ in range(len(file_names[0])):
+        plot_from_file(
+            file_name=file_names[0][_],
+            param_name=param_name,
+            color=colors[_],
+            limit_x=limit_x,
+            limit_x_range=limit_x_range,
+            range_y=range_y,
+            y_ticks=y_ticks,
+            last_N=last_N,
+        )
+    if legend:
+        patches = [
+            mpatches.Patch(color=colors[_], label=file_names[0][_])
+            for _ in range(len(file_names[0]))
+        ]
+        plt.legend(handles=patches)
+
+
+if __name__ == '__main__':
+    plot_files(['00_25', '25_50'],
+               param_name='return',
+               last_N=100,
+               limit_x=None,
+               limit_x_range='steps_return',
+               range_y=None,
+               y_ticks=None,
+               legend=True)
