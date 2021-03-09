@@ -4,12 +4,21 @@ import matplotlib.patches as mpatches
 
 import numpy as np
 
-def 
+DATA_DIR = "data/"
+OUTPUT_DIR = "figs/"
 
-def plot(x,y):
-    plot(x,y)
 
-def set_labels(axis,x_label, y_label,title):
+def get_ax_fig():
     pass
 
-def set_grid()
+
+def plot(x, y):
+    plot(x, y)
+
+
+def set_labels(axis, x_label, y_label, title):
+    pass
+
+
+def save_figure():
+    pass
