@@ -22,3 +22,14 @@ def set_labels(axis, x_label, y_label, title):
 
 def save_figure():
     pass
+
+
+def load_IEE_settings():
+    matplotlib.rcParams['svg.fonttype'] = 'none'
+    matplotlib.rcParams['font.family'] = 'sans-serif'
+    matplotlib.rcParams['font.sans-serif'] = 'Latin Modern Math'
+    matplotlib.rcParams['font.size'] = 10
+
+
+def show():
+    plt.show()
