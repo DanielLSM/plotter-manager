@@ -8,20 +8,22 @@ DATA_DIR = "data/"
 OUTPUT_DIR = "figs/"
 
 
-def get_ax_fig():
-    pass
+def get_axis_fig():
+    fig, ax = plt.subplots()
+    return fig, ax
 
 
-def plot(x, y):
+def plot(axis, x, y):
+    assert len(x) == len(y)
     plot(x, y)
 
 
 def set_labels(axis, x_label, y_label, title):
-    pass
+    ax.set(xlabel=x_label, ylabel=y_label, title=title)
 
 
-def save_figure():
-    pass
+def save_figure(fig, fig_name):
+    fig.savefig(OUTPUT_DIR + fig_name)
 
 
 def load_IEE_settings():
