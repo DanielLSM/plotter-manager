@@ -89,3 +89,25 @@ def test_plot_from_file_fill_between(mock_plt):
 
     # Assert plt.figure got called
     assert mock_plt.figure.called
+
+
+##########################################################
+# Testing plot_from_file to check if calls with range limits are correct
+
+
+@mock.patch("%s.my_plot.plt" % __name__)
+def test_plot_from_file_ranges(mock_plt):
+    my_plot.plt.figure()
+    range_y = [-1, 1]
+    my_plot.plot_from_file(file_name="00_25",
+                           param_name="return",
+                           limit_x_range='steps_return',
+                           limit_x=1000,
+                           range_y=range_y)
+    my_plot.show()
+
+    # Assert plt.ylim has been called with expected title arg
+    mock_plt.ylim.assert_called_once_with(range_y)
+
+    # Assert plt.figure got called
+    assert mock_plt.figure.called
