@@ -31,3 +31,21 @@ def test_plot_square():
     line, = plot_square(x, y)
     x_plot, y_plot = line.get_xydata().T
     np.testing.assert_array_equal(y_plot, np.square(y))
+
+
+##########################################################
+# Testing if simple plot data, plots the title correctly
+# and is only called once
+
+
+@mock.patch("%s.my_plot.plt" % __name__)
+def test_plot_data_title(mock_plt):
+    x = np.arange(0, 5, 0.1)
+    y = np.sin(x)
+    my_plot.plot_data(x, y, "my title")
+
+    # Assert plt.title has been called with expected title arg
+    mock_plt.title.assert_called_once_with("my title")
+
+    # Assert plt.figure got called
+    assert mock_plt.figure.called
