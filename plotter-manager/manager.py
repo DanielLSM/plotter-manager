@@ -66,11 +66,76 @@ class StaticPlotter(Plotter):
         self.__DATA_DIR = "data/"
         self.__OUTPUT_DIR = "figs/"
 
-    def plot_files(self):
-        raise NotImplementedError
+    def plot_files(*file_names,
+                   param_name,
+                   limit_x=None,
+                   limit_x_range=None,
+                   range_y=None,
+                   y_ticks=None,
+                   last_N=100,
+                   legend=False):
 
-    def plot_from_file(self):
-        raise NotImplementedError
+        colors = ['blue', 'green', 'red', 'yellow']
+        # import ipdb
+        # ipdb.set_trace()
+        for _ in range(len(file_names[0])):
+            plot_from_file(
+                file_name=file_names[0][_],
+                param_name=param_name,
+                color=colors[_],
+                limit_x=limit_x,
+                limit_x_range=limit_x_range,
+                range_y=range_y,
+                y_ticks=y_ticks,
+                last_N=last_N,
+            )
+        if legend:
+            patches = [
+                mpatches.Patch(color=colors[_], label=file_names[0][_])
+                for _ in range(len(file_names[0]))
+            ]
+            plt.legend(handles=patches)
+
+    def plot_from_file(file_name,
+                       param_name,
+                       last_N=100,
+                       color='blue',
+                       limit_x=None,
+                       limit_x_range=None,
+                       range_y=None,
+                       y_ticks=None):
+        metadata = load_pickle(file_name)
+        score = metadata[param_name]
+        mean, std = moving_average(score, last_N=last_N)
+        if limit_x is not None:
+            episodes = range(limit_x)
+            mean = mean[:limit_x]
+            std = std[:limit_x]
+        elif limit_x_range is not None:
+            episodes = metadata[limit_x_range]
+        else:
+            episodes = range(len(score))
+            mean, std = moving_average(score, last_N=last_N)
+
+        lower_bound = [a_i - 0.5 * b_i for a_i, b_i in zip(mean, std)]
+        upper_bound = [a_i + 0.5 * b_i for a_i, b_i in zip(mean, std)]
+        # plt.plot(episodes, score)
+        plt.fill_between(episodes,
+                         lower_bound,
+                         upper_bound,
+                         facecolor=color,
+                         alpha=0.5)
+        plt.plot(episodes, mean, color=color)
+        if range_y is not None:
+            plt.ylim(range_y)
+        if y_ticks is not None:
+            plt.yticks(np.arange(range_y[0], range_y[1] + 2 * y_ticks,
+                                 y_ticks))
+        if limit_x_range is not None:
+            plt.xlabel(limit_x_range)
+        else:
+            plt.xlabel("episodes")
+        plt.ylabel(param_name)
 
 
 class IEEEPlotter(Plotter):
@@ -85,11 +150,76 @@ class IEEEPlotter(Plotter):
         matplotlib.rcParams['font.sans-serif'] = 'Latin Modern Math'
         matplotlib.rcParams['font.size'] = 10
 
-    def plot_files(self):
-        raise NotImplementedError
+    def plot_files(*file_names,
+                   param_name,
+                   limit_x=None,
+                   limit_x_range=None,
+                   range_y=None,
+                   y_ticks=None,
+                   last_N=100,
+                   legend=False):
 
-    def plot_from_file(self):
-        raise NotImplementedError
+        colors = ['blue', 'green', 'red', 'yellow']
+        # import ipdb
+        # ipdb.set_trace()
+        for _ in range(len(file_names[0])):
+            plot_from_file(
+                file_name=file_names[0][_],
+                param_name=param_name,
+                color=colors[_],
+                limit_x=limit_x,
+                limit_x_range=limit_x_range,
+                range_y=range_y,
+                y_ticks=y_ticks,
+                last_N=last_N,
+            )
+        if legend:
+            patches = [
+                mpatches.Patch(color=colors[_], label=file_names[0][_])
+                for _ in range(len(file_names[0]))
+            ]
+            plt.legend(handles=patches)
+
+    def plot_from_file(file_name,
+                       param_name,
+                       last_N=100,
+                       color='blue',
+                       limit_x=None,
+                       limit_x_range=None,
+                       range_y=None,
+                       y_ticks=None):
+        metadata = load_pickle(file_name)
+        score = metadata[param_name]
+        mean, std = moving_average(score, last_N=last_N)
+        if limit_x is not None:
+            episodes = range(limit_x)
+            mean = mean[:limit_x]
+            std = std[:limit_x]
+        elif limit_x_range is not None:
+            episodes = metadata[limit_x_range]
+        else:
+            episodes = range(len(score))
+            mean, std = moving_average(score, last_N=last_N)
+
+        lower_bound = [a_i - 0.5 * b_i for a_i, b_i in zip(mean, std)]
+        upper_bound = [a_i + 0.5 * b_i for a_i, b_i in zip(mean, std)]
+        # plt.plot(episodes, score)
+        plt.fill_between(episodes,
+                         lower_bound,
+                         upper_bound,
+                         facecolor=color,
+                         alpha=0.5)
+        plt.plot(episodes, mean, color=color)
+        if range_y is not None:
+            plt.ylim(range_y)
+        if y_ticks is not None:
+            plt.yticks(np.arange(range_y[0], range_y[1] + 2 * y_ticks,
+                                 y_ticks))
+        if limit_x_range is not None:
+            plt.xlabel(limit_x_range)
+        else:
+            plt.xlabel("episodes")
+        plt.ylabel(param_name)
 
 
 if __name__ == '__main__':
