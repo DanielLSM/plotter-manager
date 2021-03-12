@@ -12,7 +12,8 @@ from plot import plot_data
 
 class Plotter(ABC):
     def __init__(self):
-        pass
+        self.__DATA_DIR = None
+        self.__OUTPUT_DIR = None
 
     @abstractmethod
     def plot_data(self):
@@ -44,6 +45,8 @@ class StaticPlotter(Plotter):
         super().__init__(**kwargs)
         self.axis = None
         self.figure = None
+        self.__DATA_DIR = "data/"
+        self.__OUTPUT_DIR = "data/"
 
     def plot_files(self):
         raise NotImplementedError
