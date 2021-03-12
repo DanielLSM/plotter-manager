@@ -19,6 +19,7 @@ class Plotter(ABC):
     def __init__(self, **kwargs):
         self.__DATA_DIR = "data/"
         self.__OUTPUT_DIR = "figs/"
+        self.colors = ['blue', 'green', 'red', 'yellow']
 
     def plot_files(self,
                    *file_names,
@@ -30,14 +31,11 @@ class Plotter(ABC):
                    last_N=100,
                    legend=False):
 
-        colors = ['blue', 'green', 'red', 'yellow']
-        # import ipdb
-        # ipdb.set_trace()
         for _ in range(len(file_names[0])):
             self.plot_from_file(
                 file_name=file_names[0][_],
                 param_name=param_name,
-                color=colors[_],
+                color=self.colors[_],
                 limit_x=limit_x,
                 limit_x_range=limit_x_range,
                 range_y=range_y,
@@ -46,7 +44,7 @@ class Plotter(ABC):
             )
         if legend:
             patches = [
-                mpatches.Patch(color=colors[_], label=file_names[0][_])
+                mpatches.Patch(color=self.colors[_], label=file_names[0][_])
                 for _ in range(len(file_names[0]))
             ]
             plt.legend(handles=patches)
