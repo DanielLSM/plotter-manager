@@ -11,14 +11,9 @@ from plot import plot_data
 
 
 class Plotter(ABC):
-    def __init__(self, IEEE, **kwargs):
+    def __init__(self, **kwargs):
         self.__DATA_DIR = None
         self.__OUTPUT_DIR = None
-        if IEEE:
-            matplotlib.rcParams['svg.fonttype'] = 'none'
-            matplotlib.rcParams['font.family'] = 'sans-serif'
-            matplotlib.rcParams['font.sans-serif'] = 'Latin Modern Math'
-            matplotlib.rcParams['font.size'] = 10
 
     @abstractmethod
     def plot_files(self):
@@ -64,8 +59,8 @@ class Plotter(ABC):
 
 
 class StaticPlotter(Plotter):
-    def __init__(self, IEEE=False, **kwargs):
-        super().__init__(IEEE, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.axis = None
         self.figure = None
         self.__DATA_DIR = "data/"
@@ -78,5 +73,25 @@ class StaticPlotter(Plotter):
         raise NotImplementedError
 
 
+class IEEEPlotter(Plotter):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.axis = None
+        self.figure = None
+        self.__DATA_DIR = "data/"
+        self.__OUTPUT_DIR = "figs/"
+        matplotlib.rcParams['svg.fonttype'] = 'none'
+        matplotlib.rcParams['font.family'] = 'sans-serif'
+        matplotlib.rcParams['font.sans-serif'] = 'Latin Modern Math'
+        matplotlib.rcParams['font.size'] = 10
+
+    def plot_files(self):
+        raise NotImplementedError
+
+    def plot_from_file(self):
+        raise NotImplementedError
+
+
 if __name__ == '__main__':
-    sp = StaticPlotter(IEEE=True)
+    sp = StaticPlotter()
+    sieee = IEEEPlotter()
