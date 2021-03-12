@@ -11,9 +11,14 @@ from plot import plot_data
 
 
 class Plotter(ABC):
-    def __init__(self):
+    def __init__(self, IEEE, **kwargs):
         self.__DATA_DIR = None
         self.__OUTPUT_DIR = None
+        if IEEE:
+            matplotlib.rcParams['svg.fonttype'] = 'none'
+            matplotlib.rcParams['font.family'] = 'sans-serif'
+            matplotlib.rcParams['font.sans-serif'] = 'Latin Modern Math'
+            matplotlib.rcParams['font.size'] = 10
 
     @abstractmethod
     def plot_data(self):
@@ -53,8 +58,8 @@ class Plotter(ABC):
 
 
 class StaticPlotter(Plotter):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, IEEE=False, **kwargs):
+        super().__init__(IEEE, **kwargs)
         self.axis = None
         self.figure = None
         self.__DATA_DIR = "data/"
@@ -90,4 +95,4 @@ class StaticPlotter(Plotter):
 
 
 if __name__ == '__main__':
-    sp = StaticPlotter()
+    sp = StaticPlotter(IEEE=True)
