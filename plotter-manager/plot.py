@@ -130,3 +130,5 @@ if __name__ == '__main__':
                range_y=None,
                y_ticks=None,
                legend=True)
+
+    show()

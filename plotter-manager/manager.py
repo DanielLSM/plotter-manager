@@ -29,7 +29,7 @@ class Plotter(ABC):
         # import ipdb
         # ipdb.set_trace()
         for _ in range(len(file_names[0])):
-            plot_from_file(
+            self.plot_from_file(
                 file_name=file_names[0][_],
                 param_name=param_name,
                 color=colors[_],
@@ -148,3 +148,13 @@ class IEEEPlotter(Plotter):
 if __name__ == '__main__':
     sp = StaticPlotter()
     sieee = IEEEPlotter()
+
+    sp.plot_files(['00_25', '25_50'],
+                  param_name='return',
+                  last_N=100,
+                  limit_x=None,
+                  limit_x_range='steps_return',
+                  range_y=None,
+                  y_ticks=None,
+                  legend=True)
+    sp.show()
