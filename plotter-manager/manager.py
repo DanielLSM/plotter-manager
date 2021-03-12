@@ -6,8 +6,11 @@ import matplotlib.patches as mpatches
 import numpy as np
 
 from utils import moving_average, save_pickle, load_pickle
+from utils import moving_std
 
 from plot import plot_data
+
+from mvgavg import mvgavg
 
 
 class Plotter(ABC):
@@ -58,6 +61,7 @@ class Plotter(ABC):
         metadata = load_pickle(file_name)
         score = metadata[param_name]
         mean, std = moving_average(score, last_N=last_N)
+        std = moving_std(score, last_N=last_N)
         if limit_x is not None:
             episodes = range(limit_x)
             mean = mean[:limit_x]
@@ -66,6 +70,7 @@ class Plotter(ABC):
             episodes = metadata[limit_x_range]
         else:
             episodes = range(len(score))
+
             mean, std = moving_average(score, last_N=last_N)
 
         lower_bound = [a_i - 0.5 * b_i for a_i, b_i in zip(mean, std)]
