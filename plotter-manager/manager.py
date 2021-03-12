@@ -12,11 +12,13 @@ from plot import plot_data
 
 import bottleneck as bn
 
+import os.path
+
 
 class Plotter(ABC):
     def __init__(self, **kwargs):
-        self.__DATA_DIR = None
-        self.__OUTPUT_DIR = None
+        self.__DATA_DIR = "data/"
+        self.__OUTPUT_DIR = "figs/"
 
     def plot_files(self,
                    *file_names,
@@ -58,7 +60,11 @@ class Plotter(ABC):
                        limit_x_range=None,
                        range_y=None,
                        y_ticks=None):
-        metadata = load_pickle(file_name)
+        if os.path.isfile(self.__DATA_DIR + file_name + ".pkl"):
+            metadata = load_pickle(file_name)
+        else:
+            print("Data file does not exist")
+            return
         score = metadata[param_name]
         # mean, std = moving_average(score, last_N=last_N)
         mean = bn.move_mean(score, window=last_N)
