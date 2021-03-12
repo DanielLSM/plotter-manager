@@ -21,28 +21,34 @@ class Plotter(ABC):
             matplotlib.rcParams['font.size'] = 10
 
     @abstractmethod
-    def plot_data(self):
+    def plot_files(self):
         return NotImplemented
 
     @abstractmethod
     def plot_from_file(self):
         return NotImplemented
 
-    @abstractmethod
-    def plot_files(self):
-        return NotImplemented
+    def plot_data(self, x, y, title):
+        plot_data(x=x, y=t, title=title)
 
-    @abstractmethod
-    def show(self):
-        return NotImplemented
-
-    @abstractmethod
     def get_axis_fig(self):
-        return NotImplemented
+        fig, ax = plt.subplots()
+        return fig, ax
 
-    @abstractmethod
-    def save_figure(self):
-        return NotImplemented
+    def plot(self, axis, x, y):
+        return axis.plot(x, y)
+
+    def set_labels(self, axis, x_label, y_label, title):
+        axis.set(xlabel=x_label, ylabel=y_label, title=title)
+
+    def set_grid(self, axis):
+        axis.grid()
+
+    def save_figure(self, fig, fig_name):
+        fig.savefig(self.__OUTPUT_DIR + fig_name)
+
+    def show(self):
+        plt.show()
 
     def get_data_dir(self):
         return self.__DATA_DIR
@@ -70,28 +76,6 @@ class StaticPlotter(Plotter):
 
     def plot_from_file(self):
         raise NotImplementedError
-
-    def plot_data(self, x, y, title):
-        plot_data(x=x, y=t, title=title)
-
-    def get_axis_fig(self):
-        fig, ax = plt.subplots()
-        return fig, ax
-
-    def plot(self, axis, x, y):
-        return axis.plot(x, y)
-
-    def set_labels(self, axis, x_label, y_label, title):
-        axis.set(xlabel=x_label, ylabel=y_label, title=title)
-
-    def set_grid(self, axis):
-        axis.grid()
-
-    def save_figure(self, fig, fig_name):
-        fig.savefig(self.__OUTPUT_DIR + fig_name)
-
-    def show(self):
-        plt.show()
 
 
 if __name__ == '__main__':
