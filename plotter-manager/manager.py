@@ -12,8 +12,8 @@ from plot import plot_data
 
 class Plotter(ABC):
     def __init__(self):
-        self.DATA_DIR = None
-        self.OUTPUT_DIR = None
+        self.__DATA_DIR = None
+        self.__OUTPUT_DIR = None
 
     @abstractmethod
     def plot_data(self):
@@ -39,14 +39,26 @@ class Plotter(ABC):
     def save_figure(self):
         return NotImplemented
 
+    def get_data_dir(self):
+        return self.__DATA_DIR
+
+    def get_output_dir(self):
+        return self.__OUTPUT_DIR
+
+    def set_data_dir(self, data_dir: str):
+        self.__DATA_DIR = data_dir
+
+    def set_output_dir(self, output_dir: str):
+        self.__OUTPUT_DIR = output_dir
+
 
 class StaticPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.axis = None
         self.figure = None
-        self.DATA_DIR = "data/"
-        self.OUTPUT_DIR = "figs/"
+        self.__DATA_DIR = "data/"
+        self.__OUTPUT_DIR = "figs/"
 
     def plot_files(self):
         raise NotImplementedError
@@ -71,7 +83,7 @@ class StaticPlotter(Plotter):
         axis.grid()
 
     def save_figure(self, fig, fig_name):
-        fig.savefig(OUTPUT_DIR + fig_name)
+        fig.savefig(self.__OUTPUT_DIR + fig_name)
 
     def show(self):
         plt.show()
