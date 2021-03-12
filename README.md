@@ -55,3 +55,20 @@ $ cd plotter-manager/plotter-manager
 ```
 $ python demo.py
 ```
+3. Running simple plot
+```
+$ python plot.py
+```
+
+## Running Plot Manager after refactoring (for the refactoring assignment) (OPTIONAL)
+
+1. Open your console and activate the conda environment we created before:
+```
+$ conda activate wasp-soft
+$ cd ~
+$ cd plotter-manager/plotter-manager
+```
+2. Running the demo
+```
+$ python manager.py
+```
